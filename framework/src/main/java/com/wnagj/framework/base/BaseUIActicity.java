@@ -16,7 +16,7 @@ public abstract class BaseUIActicity extends BaseActivity {
     protected Unbinder mBinder;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SystemUI.fixSystemUI(this);
         setContentView(getResLayout());
@@ -36,6 +36,8 @@ public abstract class BaseUIActicity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mBinder.unbind();
+        if (mBinder != null) {
+            mBinder.unbind();
+        }
     }
 }

@@ -80,7 +80,6 @@ public class AddFriendActivity extends BaseBackActivity {
         mSearchResultView.setLayoutManager(new LinearLayoutManager(this));
         mSearchResultView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-//        mAddFriendAdapter = new AddFriendAdapter(this, mList);
         mAddFriendAdapter = new CommonAdapter<>(mList, new CommonAdapter.OnMoreBindDataListener<AddFriendModel>() {
             @Override
             public int getItemType(int position) {
@@ -104,14 +103,14 @@ public class AddFriendActivity extends BaseBackActivity {
                     //设置描述
                     viewHolder.setText(R.id.tv_desc, model.getDesc());
 
-//                    //点击事件
-//                    viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            UserInfoActivity.startActivity(AddFriendActivity.this,
-//                                    model.getUserId());
-//                        }
-//                    });
+                    //点击事件
+                    viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UserInfoActivity.startActivity(AddFriendActivity.this,
+                                    model.getUserId());
+                        }
+                    });
                 }
             }
 
@@ -125,6 +124,7 @@ public class AddFriendActivity extends BaseBackActivity {
                 return 0;
             }
         });
+
         mSearchResultView.setAdapter(mAddFriendAdapter);
 
 

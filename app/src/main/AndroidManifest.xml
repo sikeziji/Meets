@@ -21,6 +21,13 @@
             android:name="cn.bmob.v3.util.BmobContentProvider"
             android:authorities="com.wnagj.meets.BmobContentProvider" />
 
+
+        <!--高德地图-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="0f565490df4dd08714d9e651a85fc4f3" />
+
+
         <!--FileProvide-->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -31,6 +38,23 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
+
+        <!--云服务-->
+        <service
+            android:name=".service.CloudService"
+            android:exported="true" />
+
+        <!--离线消息-->
+        <receiver
+            android:name=".receiver.SealNotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
+            </intent-filter>
+        </receiver>
 
         <!--OPPO-->
         <meta-data
@@ -92,6 +116,90 @@
             android:name=".ui.ContactFirendActivity"
             android:label="@string/text_add_friend_contact"
             android:launchMode="singleTask" />
+
+        <!--新朋友-->
+        <activity
+            android:name=".ui.NewFriendActivity"
+            android:label="@string/text_me_item_title_3"
+            android:launchMode="singleTask" />
+
+        <!--用户信息-->
+        <activity
+            android:name=".ui.UserInfoActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+
+        <!--聊天-->
+        <activity
+            android:name=".ui.ChatActivity"
+            android:launchMode="singleTask" />
+
+
+        <!--图片预览-->
+        <activity
+            android:name=".ui.ImagePreviewActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+
+        <!--位置-->
+        <activity
+            android:name=".ui.LocationActivity"
+            android:launchMode="singleTask" />
+
+        <!--聊天信息-->
+        <activity
+            android:name=".ui.ChatInfoActivity"
+            android:launchMode="singleTask" />
+
+
+
+        <!-- 融云 -->
+
+        <!-- imlib config begin -->
+        <meta-data
+            android:name="RONG_CLOUD_APP_KEY"
+            android:value="x18ywvqfx4nsc" />
+
+        <service
+            android:name="io.rong.imlib.ipc.RongService"
+            android:exported="true"
+            android:process=":ipc" />
+
+        <receiver
+            android:name="io.rong.imlib.ConnectChangeReceiver"
+            android:exported="true" />
+
+        <receiver
+            android:name="io.rong.imlib.HeartbeatReceiver"
+            android:process=":ipc" />
+        <!-- imlib config end -->
+
+        <!--必选： SDK 核心功能-->
+        <service
+            android:name="io.rong.push.rongpush.PushService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:process="io.rong.push" />
+
+        <!-- push 相关事件接收器 -->
+        <receiver
+            android:name="io.rong.push.rongpush.PushReceiver"
+            android:process="io.rong.push">   <!-- 此处进程可以改名，名称需要和PushService所在进程统一 -->
+            <!-- 心跳事件和网络切换事件监听,必须 -->
+            <intent-filter>
+                <action android:name="io.rong.push.intent.action.HEART_BEAT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+
+            <!-- 部分用户事件监听, 用来提高推送拉活率; 可移除 -->
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
 
 
     </application>

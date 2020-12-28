@@ -4,15 +4,24 @@ apply plugin: 'com.jakewharton.butterknife'
 android {
     //HttpClient
     useLibrary rootProject.ext.dependencies["httpclient"]
+
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
     defaultConfig {
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
         versionName rootProject.ext.android["versionName"]
+
         consumerProguardFiles 'consumer-rules.pro'
+
         multiDexEnabled true
+
+        ndk {
+            //"armeabi", "x86","x86_64"
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
     }
 
     buildTypes {
@@ -63,7 +72,17 @@ dependencies {
     api rootProject.ext.dependencies["buglyndk"]
     api rootProject.ext.dependencies["zxing"]
     api rootProject.ext.dependencies["videoplayer"]
+//    api rootProject.ext.dependencies["imlib"]
+//    api rootProject.ext.dependencies["rtclib"]
+
+    api 'cn.rongcloud.sdk:call_kit:4.0.0'
+    api 'cn.rongcloud.sdk:call_lib:4.0.0'
+//    api 'cn.rongcloud.sdk:rtc_lib:4.0.0'
+    api 'cn.rongcloud.sdk:im_kit:4.0.0'
+    api 'cn.rongcloud.sdk:im_lib:4.0.0'
+
     api 'androidx.multidex:multidex:2.0.1'
+
 
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
@@ -72,7 +91,7 @@ dependencies {
 //    api project(path: ':IMLib')
 //    //Call
 //    api project(path: ':CallLib')
-//    //Voice
-//    api files('libs/Msc.jar')
+    //Voice
+    api files('libs/Msc.jar')
 
 }

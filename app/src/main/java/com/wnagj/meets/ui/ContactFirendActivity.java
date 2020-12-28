@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.wnagj.framework.adapter.CommonAdapter;
+import com.wnagj.framework.adapter.CommonViewHolder;
 import com.wnagj.framework.base.BaseBackActivity;
 import com.wnagj.framework.bmob.BmobManager;
 import com.wnagj.framework.bmob.IMUser;
@@ -40,7 +42,7 @@ public class ContactFirendActivity extends BaseBackActivity {
     private RecyclerView mContactView;
     private Map<String, String> mContactMap = new HashMap<>();
 
-    private AddFriendAdapter mAddFriendAdapter;
+    private CommonAdapter<AddFriendModel> mContactAdapter;
     private List<AddFriendModel> mList = new ArrayList<>();
 
 
@@ -56,8 +58,45 @@ public class ContactFirendActivity extends BaseBackActivity {
         mContactView = (RecyclerView) findViewById(R.id.mContactView);
         mContactView.setLayoutManager(new LinearLayoutManager(this));
         mContactView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAddFriendAdapter = new AddFriendAdapter(this, mList);
-        mContactView.setAdapter(mAddFriendAdapter);
+//        mAddFriendAdapter = new AddFriendAdapter(this, mList);
+
+        mContactAdapter = new CommonAdapter<>(mList, new CommonAdapter.OnBindDataListener<AddFriendModel>() {
+            @Override
+            public void onBindViewHolder(final AddFriendModel model, CommonViewHolder viewHolder, int type, int position) {
+                //设置头像
+                viewHolder.setImageUrl(ContactFirendActivity.this, R.id.iv_photo, model.getPhoto());
+                //设置性别
+                viewHolder.setImageResource(R.id.iv_sex,
+                        model.isSex() ? R.drawable.img_boy_icon : R.drawable.img_girl_icon);
+                //设置昵称
+                viewHolder.setText(R.id.tv_nickname, model.getNickName());
+                //年龄
+                viewHolder.setText(R.id.tv_ages, model.getAge() + getString(R.string.text_search_age));
+                //设置描述
+                viewHolder.setText(R.id.tv_desc, model.getDesc());
+
+                if (model.isContact()) {
+                    viewHolder.getView(R.id.ll_contact_info).setVisibility(View.VISIBLE);
+                    viewHolder.setText(R.id.tv_contact_name, model.getContactName());
+                    viewHolder.setText(R.id.tv_contact_phone, model.getContactPhone());
+                }
+
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UserInfoActivity.startActivity(ContactFirendActivity.this,
+                                model.getUserId());
+                    }
+                });
+            }
+
+            @Override
+            public int getLayoutId(int type) {
+                return R.layout.layout_search_user_item;
+            }
+        });
+
+        mContactView.setAdapter(mContactAdapter);
 
         mContactView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,8 +225,7 @@ public class ContactFirendActivity extends BaseBackActivity {
         model.setContactPhone(phone);
 
         mList.add(model);
-//        mContactAdapter.notifyDataSetChanged();
-        mAddFriendAdapter.notifyDataSetChanged();
+        mContactAdapter.notifyDataSetChanged();
     }
 
     @Override

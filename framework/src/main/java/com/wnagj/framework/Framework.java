@@ -1,13 +1,22 @@
 package com.wnagj.framework;
 
 import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.wnagj.framework.bmob.BmobManager;
+import com.wnagj.framework.cloud.CloudManager;
 import com.wnagj.framework.helper.WindowHelper;
+import com.wnagj.framework.manager.MapManager;
 import com.wnagj.framework.util.LogUtils;
 import com.wnagj.framework.util.SpUtils;
 
+import org.litepal.LitePal;
+
 import java.util.function.Consumer;
+
+import io.reactivex.plugins.RxJavaPlugins;
 
 /**
  * framework 入口
@@ -39,13 +48,14 @@ public class Framework {
      *
      * @param mContext
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void initFramework(Context mContext) {
         LogUtils.i("initFramework");
         SpUtils.getInstance().initSp(mContext);
         BmobManager.getInstance().initBmob(mContext);
-//        CloudManager.getInstance().initCloud(mContext);
-//        LitePal.initialize(mContext);
-//        MapManager.getInstance().initMap(mContext);
+        CloudManager.getInstance().initCloud(mContext);
+        LitePal.initialize(mContext);
+        MapManager.getInstance().initMap(mContext);
         WindowHelper.getInstance().initWindow(mContext);
 //        CrashReport.initCrashReport(mContext, BUGLY_KEY, BuildConfig.LOG_DEBUG);
 //        ZXingLibrary.initDisplayOpinion(mContext);
@@ -53,12 +63,12 @@ public class Framework {
 //        KeyWordManager.getInstance().initManager(mContext);
 //
 //        //全局捕获RxJava异常
-//        RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
-//            @Override
-//            public void accept(Throwable throwable) throws Exception {
-//                LogUtils.e("RxJava：" + throwable.toString());
-//            }
-//        });
+        RxJavaPlugins.setErrorHandler(new io.reactivex.functions.Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                LogUtils.e("RxJava：" + throwable.toString());
+            }
+        });
     }
 
 

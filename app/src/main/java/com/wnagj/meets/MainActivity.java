@@ -23,6 +23,7 @@ import com.wnagj.framework.event.MessageEvent;
 import com.wnagj.framework.gson.TokenBean;
 import com.wnagj.framework.java.SimulationData;
 import com.wnagj.framework.manager.DialogManager;
+import com.wnagj.framework.manager.HttpManager;
 import com.wnagj.framework.util.LogUtils;
 import com.wnagj.framework.util.SpUtils;
 import com.wnagj.framework.view.DialogView;
@@ -36,11 +37,18 @@ import com.wnagj.meets.ui.FirstUploadActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 主界面
@@ -158,21 +166,31 @@ public class MainActivity extends BaseUIActicity {
      * @param s
      */
     private void parsingCloudToken(String s) {
-//        try {
-//            LogUtils.i("parsingCloudToken:" + s);
-//            TokenBean tokenBean = new Gson().fromJson(s, TokenBean.class);
-//            if (tokenBean.getCode() == 200) {
-//                if (!TextUtils.isEmpty(tokenBean.getToken())) {
-//                    //保存Token
-//                    SpUtils.getInstance().putString(Constants.SP_TOKEN, tokenBean.getToken());
-//                    startCloudService();
-//                }
-//            } else if (tokenBean.getCode() == 2007) {
-//                Toast.makeText(this, "注册人数已达上限，请替换成自己的Key", Toast.LENGTH_SHORT).show();
-//            }
-//        } catch (Exception e) {
-//            LogUtils.i("parsingCloudToken:" + e.toString());
-//        }
+        try {
+            LogUtils.i("parsingCloudToken:" + s);
+            TokenBean tokenBean = new Gson().fromJson(s, TokenBean.class);
+            if (tokenBean.getCode() == 200) {
+                if (!TextUtils.isEmpty(tokenBean.getToken())) {
+                    //保存Token
+                    SpUtils.getInstance().putString(Constants.SP_TOKEN, tokenBean.getToken());
+                    startCloudService();
+                }
+            } else if (tokenBean.getCode() == 2007) {
+                Toast.makeText(this, "注册人数已达上限，请替换成自己的Key", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            LogUtils.i("parsingCloudToken:" + e.toString());
+        }
+    }
+
+    /**
+     * 启动云服务去连接融云服务
+     */
+    private void startCloudService() {
+        LogUtils.i("startCloudService");
+        startService(new Intent(this, CloudService.class));
+        //检查更新
+//        new UpdateHelper(this).updateApp(null);
     }
 
     /**
@@ -183,31 +201,30 @@ public class MainActivity extends BaseUIActicity {
          * 1.去融云后台获取Token
          * 2.连接融云
          */
-//        final HashMap<String, String> map = new HashMap<>();
-//        map.put("userId", BmobManager.getInstance().getUser().getObjectId());
-//        map.put("name", BmobManager.getInstance().getUser().getTokenNickName());
-//        map.put("portraitUri", BmobManager.getInstance().getUser().getTokenPhoto());
-//
-//        //通过OkHttp请求Token
-//        disposable = Observable.create(new ObservableOnSubscribe<String>() {
-//            @Override
-//            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-//                //执行请求过程
-//                String json = HttpManager.getInstance().postCloudToken(map);
-//                LogUtils.i("json:" + json);
-//                emitter.onNext(json);
-//                emitter.onComplete();
-//            }
-//            //线程调度
-//        }).subscribeOn(Schedulers.newThread())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<String>() {
-//                    @Override
-//                    public void accept(String s) throws Exception {
-//                        parsingCloudToken(s);
-//                    }
-//                });
+        final HashMap<String, String> map = new HashMap<>();
+        map.put("userId", BmobManager.getInstance().getUser().getObjectId());
+        map.put("name", BmobManager.getInstance().getUser().getTokenNickName());
+        map.put("portraitUri", BmobManager.getInstance().getUser().getTokenPhoto());
 
+        //通过OkHttp请求Token
+        disposable = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                //执行请求过程
+                String json = HttpManager.getInstance().postCloudToken(map);
+                LogUtils.i("json:" + json);
+                emitter.onNext(json);
+                emitter.onComplete();
+            }
+            //线程调度
+        }).subscribeOn(Schedulers.newThread())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        parsingCloudToken(s);
+                    }
+                });
     }
 
     /**
