@@ -21,6 +21,9 @@ import com.wnagj.framework.helper.GlideHelper;
 import com.wnagj.framework.util.LogUtils;
 import com.wnagj.meets.R;
 import com.wnagj.meets.ui.NewFriendActivity;
+import com.wnagj.meets.ui.PrivateSetActivity;
+import com.wnagj.meets.ui.SettingActivity;
+import com.wnagj.meets.ui.ShareImgActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -123,11 +126,11 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.ll_private_set:
                 //隐私设置
-//                startActivity(new Intent(getActivity(), PrivateSetActivity.class));
+                startActivity(new Intent(getActivity(), PrivateSetActivity.class));
                 break;
             case R.id.ll_share:
                 //分享
-//                startActivity(new Intent(getActivity(), ShareImgActivity.class));
+                startActivity(new Intent(getActivity(), ShareImgActivity.class));
                 break;
             case R.id.ll_notice:
                 //通知
@@ -135,7 +138,7 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.ll_setting:
                 //设置
-//                startActivity(new Intent(getActivity(), SettingActivity.class));
+                startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
         }
     }

@@ -148,11 +148,38 @@
             android:name=".ui.LocationActivity"
             android:launchMode="singleTask" />
 
-        <!--聊天信息-->
+        <!--聊天信息-->å
         <activity
             android:name=".ui.ChatInfoActivity"
             android:launchMode="singleTask" />
 
+        <!--二维码-->
+        <activity
+            android:name=".ui.QrCodeActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!--分享-->
+        <activity
+            android:name=".ui.ShareImgActivity"
+            android:launchMode="singleTask" />
+
+
+        <!--隐私设置-->
+        <activity
+            android:name=".ui.PrivateSetActivity"
+            android:launchMode="singleTask" />
+
+        <!--设置-->
+        <activity
+            android:name=".ui.SettingActivity"
+            android:launchMode="singleTask" />
+
+        <!--主题-->
+        <activity
+            android:name=".ui.ChatThemeActivity"
+            android:label="主题"
+            android:launchMode="singleTask" />
 
 
         <!-- 融云 -->

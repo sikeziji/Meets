@@ -185,6 +185,40 @@ public class BmobManager {
         query.findObjects(listener);
     }
 
+    /**
+     * 添加私有库
+     *
+     * @param listener
+     */
+    public void addPrivateSet(SaveListener<String> listener) {
+        PrivateSet set = new PrivateSet();
+        set.setUserId(getUser().getObjectId());
+        set.setPhone(getUser().getMobilePhoneNumber());
+        set.save(listener);
+    }
+
+    /**
+     * 删除私有库
+     *
+     * @param id
+     * @param listener
+     */
+    public void delPrivateSet(String id, UpdateListener listener) {
+        PrivateSet set = new PrivateSet();
+        set.setObjectId(id);
+        set.delete(listener);
+    }
+
+
+    /**
+     * 查询更新
+     *
+     * @param listener
+     */
+    public void queryUpdateSet(FindListener<UpdateSet> listener) {
+        BmobQuery<UpdateSet> bmobQuery = new BmobQuery<>();
+        bmobQuery.findObjects(listener);
+    }
 
     public interface OnUploadPhotoListener {
 
