@@ -18,6 +18,7 @@ import com.wnagj.meets.R;
 import com.wnagj.meets.adapter.CloudTagAdapter;
 import com.wnagj.meets.model.StarModel;
 import com.wnagj.meets.ui.AddFriendActivity;
+import com.wnagj.meets.ui.QrCodeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,10 @@ public class StarFragment extends BaseFragment {
     private CloudTagAdapter mCloudTagAdapter;
 
 
+    //二维码结果
+    private static final int REQUEST_CODE = 1235;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_star, null);
@@ -86,9 +91,9 @@ public class StarFragment extends BaseFragment {
     void onClick(View view){
         switch (view.getId()) {
             case R.id.iv_camera:
-//                //扫描
-//                Intent intent = new Intent(getActivity(), QrCodeActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE);
+                //扫描
+                Intent intent = new Intent(getActivity(), QrCodeActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.iv_add:
                 //添加好友
