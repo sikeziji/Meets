@@ -5,8 +5,11 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.tencent.bugly.crashreport.CrashReport;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.wnagj.framework.bmob.BmobManager;
 import com.wnagj.framework.cloud.CloudManager;
+import com.wnagj.framework.helper.NotificationHelper;
 import com.wnagj.framework.helper.WindowHelper;
 import com.wnagj.framework.manager.MapManager;
 import com.wnagj.framework.util.LogUtils;
@@ -25,7 +28,7 @@ public class Framework {
 
     private volatile static Framework mFramework;
 
-    private String BUGLY_KEY = "d51bdd38bd";
+    private String BUGLY_KEY = "3fa947674f";
 
 
     private Framework() {
@@ -57,9 +60,9 @@ public class Framework {
         LitePal.initialize(mContext);
         MapManager.getInstance().initMap(mContext);
         WindowHelper.getInstance().initWindow(mContext);
-//        CrashReport.initCrashReport(mContext, BUGLY_KEY, BuildConfig.LOG_DEBUG);
-//        ZXingLibrary.initDisplayOpinion(mContext);
-//        NotificationHelper.getInstance().createChannel(mContext);
+        CrashReport.initCrashReport(mContext, BUGLY_KEY, false);
+        ZXingLibrary.initDisplayOpinion(mContext);
+        NotificationHelper.getInstance().createChannel(mContext);
 //        KeyWordManager.getInstance().initManager(mContext);
 //
 //        //全局捕获RxJava异常

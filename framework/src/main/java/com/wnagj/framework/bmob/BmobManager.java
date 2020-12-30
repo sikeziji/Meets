@@ -220,6 +220,33 @@ public class BmobManager {
         bmobQuery.findObjects(listener);
     }
 
+    /**
+     * 查询所有的广场的数据
+     *
+     * @param listener
+     */
+    public void queryAllSquare(FindListener<SquareSet> listener) {
+        BmobQuery<SquareSet> query = new BmobQuery<>();
+        query.findObjects(listener);
+    }
+
+    /**
+     * 发布广场
+     *
+     * @param mediaType 媒体类型
+     * @param text      文本
+     * @param path      路径
+     */
+    public void pushSquare(int mediaType, String text, String path, SaveListener<String> listener) {
+        SquareSet squareSet = new SquareSet();
+        squareSet.setUserId(getUser().getObjectId());
+        squareSet.setPushTime(System.currentTimeMillis());
+
+        squareSet.setText(text);
+        squareSet.setMediaUrl(path);
+        squareSet.setPushType(mediaType);
+        squareSet.save(listener);
+    }
     public interface OnUploadPhotoListener {
 
         void OnUpdateDone();
@@ -333,4 +360,36 @@ public class BmobManager {
         });
     }
 
+    /**
+     * 查询缘分池
+     *
+     * @param listener
+     */
+    public void queryFateSet(FindListener<FateSet> listener) {
+        BmobQuery<FateSet> query = new BmobQuery<>();
+        query.findObjects(listener);
+    }
+
+    /**
+     * 添加到缘分池中
+     *
+     * @param listener
+     */
+    public void addFateSet(SaveListener<String> listener) {
+        FateSet set = new FateSet();
+        set.setUserId(getUser().getObjectId());
+        set.save(listener);
+    }
+
+    /**
+     * 删除缘分池
+     *
+     * @param id
+     * @param listener
+     */
+    public void delFateSet(String id, UpdateListener listener) {
+        FateSet set = new FateSet();
+        set.setObjectId(id);
+        set.delete(listener);
+    }
 }

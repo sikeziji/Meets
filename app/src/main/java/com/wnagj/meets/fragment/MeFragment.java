@@ -20,6 +20,7 @@ import com.wnagj.framework.event.MessageEvent;
 import com.wnagj.framework.helper.GlideHelper;
 import com.wnagj.framework.util.LogUtils;
 import com.wnagj.meets.R;
+import com.wnagj.meets.ui.MeInfoActivity;
 import com.wnagj.meets.ui.NewFriendActivity;
 import com.wnagj.meets.ui.PrivateSetActivity;
 import com.wnagj.meets.ui.SettingActivity;
@@ -118,7 +119,7 @@ public class MeFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.ll_me_info:
                 //个人信息
-//                startActivity(new Intent(getActivity(), MeInfoActivity.class));
+                startActivity(new Intent(getActivity(), MeInfoActivity.class));
                 break;
             case R.id.ll_new_friend:
                 //新朋友

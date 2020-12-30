@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Framework</string>
 
     <string name="text_devices_not_supper_audio">The device does not support audio and video calls</string>
 

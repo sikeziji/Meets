@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Framework</string>
 
     <string name="text_devices_not_supper_audio">设备不支持音视频通话</string>
 

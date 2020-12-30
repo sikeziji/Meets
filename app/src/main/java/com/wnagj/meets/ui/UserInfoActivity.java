@@ -46,8 +46,16 @@ public class UserInfoActivity extends BaseUIActicity {
      * - 普通信息
      * - 构建一个RecycleView 宫格
      * 2. 建立好友关系模型
+     *   与我有关系的是好友
+     *   1.在我的好友列表中，
+     *   2.同意了我的好友申请 BmobObject建表
+     *   3.查询所有的Friend表，其中user对应自己的列都是我的好友
      * 3. 实现添加好友的提示框
      * 4. 发送添加好友的消息
+     *   1. 自定义消息类型
+     *   2.自定义协议
+     *   发送文本消息 Content，我们队文本进行处理：增加了Json 定义一个标记来显示
+     *   点击提示框发送按钮去发送
      * 5. 接受好友的消息
      */
 
@@ -265,9 +273,9 @@ public class UserInfoActivity extends BaseUIActicity {
             case R.id.ll_back:
                 finish();
                 break;
-//            case R.id.iv_user_photo:
-//                ImagePreviewActivity.startActivity(this, true, imUser.getPhoto());
-//                break;
+            case R.id.iv_user_photo:
+                ImagePreviewActivity.startActivity(this, true, mImUser.getPhoto());
+                break;
             case R.id.btn_add_friend:
                 DialogManager.getInstance().show(mAddFriendDialogView);
                 break;
@@ -276,10 +284,19 @@ public class UserInfoActivity extends BaseUIActicity {
                         userId,mImUser.getNickName(),mImUser.getPhoto());
                 break;
             case R.id.btn_audio_chat:
-                finish();
+                //窗口权限
+                if (!checkWindowPermissions()) {
+                    requestWindowPermissions();
+                } else {
+                    CloudManager.getInstance().startAudioCall(this, userId);
+                }
                 break;
             case R.id.btn_video_chat:
-                finish();
+                if (!checkWindowPermissions()) {
+                    requestWindowPermissions();
+                } else {
+                    CloudManager.getInstance().startVideoCall(this, userId);
+                }
                 break;
         }
 

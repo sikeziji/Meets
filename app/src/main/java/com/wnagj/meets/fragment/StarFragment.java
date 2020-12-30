@@ -224,7 +224,7 @@ public class StarFragment extends BaseFragment {
 
 
     @OnClick({R.id.iv_camera,R.id.iv_add,R.id.ll_random,
-            R.id.ll_soul})
+            R.id.ll_soul, R.id.ll_fate, R.id.ll_love})
     void onClick(View view){
         switch (view.getId()) {
             case R.id.iv_camera:
@@ -241,41 +241,41 @@ public class StarFragment extends BaseFragment {
                 pairUser(PairFriendHelper.MatchRules.Randomatch);
                 break;
             case R.id.ll_soul:
+//                灵魂匹配
+                if(TextUtils.isEmpty(BmobManager.getInstance().getUser().getConstellation())){
+                    tv_null_text.setText(getString(R.string.text_star_par_tips_1));
+                    DialogManager.getInstance().show(mNullDialogView);
+                    return;
+                }
+
+                if(BmobManager.getInstance().getUser().getAge() == 0){
+                    tv_null_text.setText(getString(R.string.text_star_par_tips_2));
+                    DialogManager.getInstance().show(mNullDialogView);
+                    return;
+                }
+
+                if(TextUtils.isEmpty(BmobManager.getInstance().getUser().getHobby())){
+                    tv_null_text.setText(getString(R.string.text_star_par_tips_3));
+                    DialogManager.getInstance().show(mNullDialogView);
+                    return;
+                }
+
+                if(TextUtils.isEmpty(BmobManager.getInstance().getUser().getStatus())){
+                    tv_null_text.setText(getString(R.string.text_star_par_tips_4));
+                    DialogManager.getInstance().show(mNullDialogView);
+                    return;
+                }
+
                 //灵魂匹配
-//                if(TextUtils.isEmpty(BmobManager.getInstance().getUser().getConstellation())){
-//                    tv_null_text.setText(getString(R.string.text_star_par_tips_1));
-//                    DialogManager.getInstance().show(mNullDialogView);
-//                    return;
-//                }
-//
-//                if(BmobManager.getInstance().getUser().getAge() == 0){
-//                    tv_null_text.setText(getString(R.string.text_star_par_tips_2));
-//                    DialogManager.getInstance().show(mNullDialogView);
-//                    return;
-//                }
-//
-//                if(TextUtils.isEmpty(BmobManager.getInstance().getUser().getHobby())){
-//                    tv_null_text.setText(getString(R.string.text_star_par_tips_3));
-//                    DialogManager.getInstance().show(mNullDialogView);
-//                    return;
-//                }
-//
-//                if(TextUtils.isEmpty(BmobManager.getInstance().getUser().getStatus())){
-//                    tv_null_text.setText(getString(R.string.text_star_par_tips_4));
-//                    DialogManager.getInstance().show(mNullDialogView);
-//                    return;
-//                }
-//
-//                //灵魂匹配
-//                pairUser(1);
+                pairUser(PairFriendHelper.MatchRules.SoulMatch);
                 break;
             case R.id.ll_fate:
                 //缘分匹配
-//                pairUser(2);
+                pairUser(PairFriendHelper.MatchRules.FateMatch);
                 break;
             case R.id.ll_love:
                 //恋爱匹配
-//                pairUser(3);
+                pairUser(PairFriendHelper.MatchRules.LoveMatch);
                 break;
         }
     }

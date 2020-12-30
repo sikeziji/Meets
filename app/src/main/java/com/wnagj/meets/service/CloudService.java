@@ -32,6 +32,7 @@ import com.wnagj.framework.event.EventManager;
 import com.wnagj.framework.event.MessageEvent;
 import com.wnagj.framework.gson.TextBean;
 import com.wnagj.framework.helper.GlideHelper;
+import com.wnagj.framework.helper.NotificationHelper;
 import com.wnagj.framework.helper.WindowHelper;
 import com.wnagj.framework.manager.MediaPlayerManager;
 import com.wnagj.framework.util.CommonUtils;
@@ -729,11 +730,11 @@ public class CloudService extends Service implements View.OnClickListener{
                     if (friendType == 0) {
                         Intent intent = new Intent(CloudService.this, NewFriendActivity.class);
                         PendingIntent pi = PendingIntent.getActivities(CloudService.this, 0, new Intent[]{intent}, PendingIntent.FLAG_CANCEL_CURRENT);
-//                        NotificationHelper.getInstance().pushAddFriendNotification(imUser.getObjectId(), title, text, resource, pi);
+                        NotificationHelper.getInstance().pushAddFriendNotification(imUser.getObjectId(), title, text, resource, pi);
                     } else if (friendType == 1) {
                         Intent intent = new Intent(CloudService.this, MainActivity.class);
                         PendingIntent pi = PendingIntent.getActivities(CloudService.this, 0, new Intent[]{intent}, PendingIntent.FLAG_CANCEL_CURRENT);
-//                        NotificationHelper.getInstance().pushArgeedFriendNotification(imUser.getObjectId(), title, text, resource, pi);
+                        NotificationHelper.getInstance().pushArgeedFriendNotification(imUser.getObjectId(), title, text, resource, pi);
                     }
                 } else if (type == 1) {
                     Intent intent = new Intent(CloudService.this, ChatActivity.class);
@@ -741,7 +742,7 @@ public class CloudService extends Service implements View.OnClickListener{
                     intent.putExtra(Constants.INTENT_USER_NAME, imUser.getNickName());
                     intent.putExtra(Constants.INTENT_USER_PHOTO, imUser.getPhoto());
                     PendingIntent pi = PendingIntent.getActivities(CloudService.this, 0, new Intent[]{intent}, PendingIntent.FLAG_CANCEL_CURRENT);
-//                    NotificationHelper.getInstance().pushMessageNotification(imUser.getObjectId(), title, text, resource, pi);
+                    NotificationHelper.getInstance().pushMessageNotification(imUser.getObjectId(), title, text, resource, pi);
                 }
             }
         });

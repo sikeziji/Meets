@@ -148,7 +148,7 @@
             android:name=".ui.LocationActivity"
             android:launchMode="singleTask" />
 
-        <!--聊天信息-->å
+        <!--聊天信息-->
         <activity
             android:name=".ui.ChatInfoActivity"
             android:launchMode="singleTask" />
@@ -179,6 +179,23 @@
         <activity
             android:name=".ui.ChatThemeActivity"
             android:label="主题"
+            android:launchMode="singleTask" />
+
+        <!--个人信息-->
+        <activity
+            android:name=".ui.MeInfoActivity"
+            android:label="@string/text_me_item_title_1"
+            android:launchMode="singleTask" />
+
+        <!--通知-->
+        <activity
+            android:name=".ui.NoticeActivity"
+            android:launchMode="singleTask" />
+
+        <!--发朋友圈-->
+        <activity
+            android:name=".ui.PushSquareActivity"
+            android:label="@string/text_square_psuh"
             android:launchMode="singleTask" />
 
 
